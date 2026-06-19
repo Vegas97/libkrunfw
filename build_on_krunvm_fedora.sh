@@ -12,7 +12,7 @@ fi
 # realpath does not exist by default on macOS, use `brew install coreutils` to get it
 SCRIPTPATH=`realpath $0`
 WORKDIR=`dirname $SCRIPTPATH`
-krunvm create fedora --name libkrunfw-builder --cpus 2 --mem 2048 -v $WORKDIR:/work -w /work
+krunvm create fedora --name libkrunfw-builder --cpus 6 --mem 4096 -v "$WORKDIR:/work" -w /work
 if [ $? != 0 ]; then
 	echo "Error creating lightweight VM"
 	exit -1
@@ -32,7 +32,7 @@ if [ $? != 0 ]; then
 	exit -1
 fi
 
-krunvm start libkrunfw-builder /usr/bin/make -- -j2
+krunvm start libkrunfw-builder /usr/bin/make -- -j6
 if [ $? != 0 ]; then
 	echo "Error running command on VM"
 	krunvm delete libkrunfw-builder
